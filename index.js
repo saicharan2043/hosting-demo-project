@@ -24,7 +24,7 @@ connection.connect(function(error){
 })
 
 app.post("/registration" , async(request , response) =>{
-    const {username , password} = request.body
+    // const {username , password} = request.body
     connection.query(`insert into user(name , user_name , password , gander)values('pawan' , 'pawan@gmail.com' , 'pawan@123' , 'male')` , (error , reslut)=>{
         if (error){
             response.status(400).json({massage : "Data not Add.."})
