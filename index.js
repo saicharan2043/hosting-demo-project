@@ -48,4 +48,8 @@ app.get("/login" , (request , response)=>{
     })
 })
 
+app.get("/sai" , (req , resp) =>{
+    resp.status(200).json({name : "saikiran"})
+})
+
 app.listen(process.env.PORT , ()=>console.log(`server is running ${process.env.port}`))
