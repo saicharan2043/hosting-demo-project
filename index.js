@@ -23,6 +23,11 @@ connection.connect(function(error){
     console.log("connect database successfuly..")
 })
 
+app.use(cors({
+    origin : "http://localhost:3000",
+    methods : ["POST" , "DELETE" , "PUT" , "GET"]
+}))
+
 app.post("/registration" , async(request , response) =>{
     // const {username , password} = request.body
     connection.query(`insert into user(name , user_name , password , gander)values('pawan' , 'pawan@gmail.com' , 'pawan@123' , 'male')` , (error , reslut)=>{
@@ -50,6 +55,12 @@ app.get("/login" , (request , response)=>{
 
 app.get("/sai" , (req , resp) =>{
     resp.status(200).json({name : "saikiran"})
+})
+
+app.get("/" , async(req , res)=>{
+    const response = await fetch("https://demo-hosting-su9j.onrender.com/sai")
+    const data = await response.json()
+    res.send(data)
 })
 
 app.listen(process.env.PORT , ()=>console.log(`server is running ${process.env.port}`))
