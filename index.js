@@ -48,4 +48,4 @@ app.get("/login" , (request , response)=>{
     })
 })
 
-app.listen(process.env.port , ()=>console.log(`server is running ${process.env.port}`))
+app.listen(process.env.PORT , ()=>console.log(`server is running ${process.env.port}`))
