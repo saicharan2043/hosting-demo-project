@@ -3,7 +3,6 @@ const mysql = require("mysql")
 const express = require("express")
 const cors = require("cors")
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken")
 const app = express()
 
 app.use(express.json())
@@ -77,24 +76,6 @@ app.post("/login" , (request , response)=>{
     })
 })
 
-app.get("/sai" , (req , resp) =>{
-   connection.query(`select * from user` , (error, reslut)=>{
-    if(error)
-        throw error
-    console.log(reslut)
-    connection.query(`select*from user where user_name = '${"saikiran"}'` , (error , second)=>{
-        if (error)
-            throw error
-        console.log(second)
-    })
-   })
-   
-})
 
-app.get("/" , async(req , res)=>{
-    const response = await fetch("https://demo-hosting-su9j.onrender.com/sai")
-    const data = await response.json()
-    res.send(data)
-})
 
 app.listen(process.env.PORT , ()=>console.log(`server is running ${process.env.port}`))
