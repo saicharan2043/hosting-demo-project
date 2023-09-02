@@ -2,6 +2,8 @@ const dotenv = require("dotenv")
 const mysql = require("mysql")
 const express = require("express")
 const cors = require("cors")
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken")
 const app = express()
 
 app.use(express.json())
@@ -29,33 +31,64 @@ app.use(cors({
     methods : ["POST" , "DELETE" , "PUT" , "GET"]
 }))
 
-app.post("/registration" , async(request , response) =>{
-    // const {username , password} = request.body
-    connection.query(`insert into user(name , user_name , password , gander)values('pawan' , 'pawan@gmail.com' , 'pawan@123' , 'male')` , (error , reslut)=>{
+app.post("/register" , async(request , response) =>{
+    const {username , password , name , gander} = request.body
+    const modifyPassword = await bcrypt.hash(password, 10);
+    connection.query(`select * from user where user_name = '${username}'` , (error , reslut)=>{
         if (error){
-            response.status(400).json({massage : "Data not Add.."})
-            console.log(error)
+            response.status(400).json({error_msg : "database error"})
         }else{
-            console.log("quary success")
-            response.status(200).json({massage : "added successfuly.."})
+            if (reslut.length === 0){
+                connection.query(`insert into user(name , user_name , password , gander)values('${name}','${username}' ,  '${modifyPassword}' , '${gander}')` , (error , reslut)=>{
+                    if (error){
+                        response.status(400).json({error_msg : "database error"})
+                    }else{
+                        response.status(200).json({masg : "successfuly login"})
+                    }
+                    
+                })
+            }else{
+                response.status(400).json({error_msg : "this username already register"})
+            }
         }
-        
     })
+    
     
 })
 
-app.get("/login" , (request , response)=>{
-    connection.query(`select * from user` , (error , reslut) =>{
+app.post("/login" , (request , response)=>{
+    const {username , password} = request.body
+    connection.query(`select * from user where user_name = '${username}'` , async(error , reslut) =>{
         if(error){
-            response.send(error)
+            response.status(400).json({error_msg : "database error"})
         }else{
-            response.send(reslut)
+            if(reslut.length !== 0){
+                const comperePassword = await bcrypt.compare(password, reslut[0].password)
+                if(comperePassword){
+                    response.status(200).json({masg : "successfuly login"})
+                }else{
+                    response.status(400).json({error_msg : "password is wrong"})
+                }
+            }else{
+                response.status(400).json({error_msg : "user is not register"})
+            }
+            
         }
     })
 })
 
 app.get("/sai" , (req , resp) =>{
-    resp.status(200).json({name : "saikiran"})
+   connection.query(`select * from user` , (error, reslut)=>{
+    if(error)
+        throw error
+    console.log(reslut)
+    connection.query(`select*from user where user_name = '${"saikiran"}'` , (error , second)=>{
+        if (error)
+            throw error
+        console.log(second)
+    })
+   })
+   
 })
 
 app.get("/" , async(req , res)=>{
