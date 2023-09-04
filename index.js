@@ -26,7 +26,7 @@ connection.connect(function(error){
 })
 
 app.use(cors({
-    origin : "http://localhost:3000",
+    origin : ["http://localhost:3000" , "https://online-shoping-app.netlify.app"],
     methods : ["POST" , "DELETE" , "PUT" , "GET"]
 }))
 
