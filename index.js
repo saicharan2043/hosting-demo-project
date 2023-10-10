@@ -29,7 +29,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "https://online-shoping-app.netlify.app",
-      "https://jobby-web-application.netlify.app/",
+      "https://jobby-web-application.netlify.app",
     ],
     methods: ["POST", "DELETE", "PUT", "GET"],
   })
