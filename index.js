@@ -30,6 +30,7 @@ app.use(
       "http://localhost:3000",
       "https://online-shoping-app.netlify.app",
       "https://jobby-web-application.netlify.app",
+      "https://nxtonlinestore.ccbp.tech",
     ],
     methods: ["POST", "DELETE", "PUT", "GET"],
   })
@@ -71,6 +72,7 @@ app.post("/login", (request, response) => {
     `select * from user where user_name = '${username}'`,
     async (error, reslut) => {
       if (error) {
+        console.log(error);
         response.status(400).json({ error_msg: "database error" });
       } else {
         if (reslut.length !== 0) {
