@@ -31,6 +31,7 @@ app.use(
       "https://online-shoping-app.netlify.app",
       "https://jobby-web-application.netlify.app",
       "https://nxtonlinestore.ccbp.tech",
+      "https://book-store-web-application.netlify.app",
     ],
     methods: ["POST", "DELETE", "PUT", "GET"],
   })
